@@ -1,6 +1,7 @@
 import streamlit as st
 import groq
 import re
+import requests  # <--- import requests
 
 # Set the title
 st.title("Business Networking Follow-Up Generator")
@@ -8,12 +9,17 @@ st.title("Business Networking Follow-Up Generator")
 # Your Groq API Key
 GROQ_API_KEY = "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"
 
-# Example: Hardcoded conversation history
-conversation_text = """
-John: Hey, it was great meeting you at the Startup Conference! I loved hearing about your work at ABC Tech.
-Sarah: Same here, John! I think we have a lot of overlap between our projects.
-John: Maybe we should grab coffee sometime and brainstorm?
-"""
+# Fetch conversation from your backend
+def fetch_conversation():
+    try:
+        response = requests.get("https://la-hacks-2025-backend.onrender.com/api/get-conversations")
+        response.raise_for_status()  # Raises error for bad responses
+        data = response.json()
+        # Assume the conversation text is stored under a key like "conversation" — adjust if necessary
+        return data.get("transcriptions", "No conversation found.")
+    except Exception as e:
+        st.error(f"Failed to fetch conversation: {e}")
+        return "Error fetching conversation."
 
 # Function to make LinkedIn links clickable (if there are any)
 def make_links_clickable(text):
@@ -42,6 +48,11 @@ def analyze_summary(conversation_text):
 
 # --- Now run everything automatically ---
 
+# Get the conversation
+conversation_text = fetch_conversation()
+
+if isinstance(conversation_text, list):
+    conversation_text = "\n".join(conversation_text)
 # Make LinkedIn links clickable
 clickable_conversation = make_links_clickable(conversation_text)
 
