@@ -7,7 +7,7 @@ import google.generativeai as genai  # Gemini API
 from io import BytesIO
 
 # --- Streamlit Page Config ---
-st.set_page_config(page_title="Business Networking Follow-Up Generator", page_icon="📄", layout="centered")
+st.set_page_config(page_title="Business Networking Follow-Up Generator", page_icon="📄", layout="centered", initial_sidebar_state="expanded")
 st.title("Business Networking Follow-Up Generator")
 
 # --- Global conversation history (for demo, you can populate dynamically later) ---
