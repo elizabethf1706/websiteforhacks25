@@ -3,3 +3,5 @@ pymupdf
 groq
 fitz
 mammoth
+google-generativeai
+requests
