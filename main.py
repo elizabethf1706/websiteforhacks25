@@ -28,7 +28,7 @@ def extract_text_from_docx(file):
 def send_resume_to_backend(resume_text):
     try:
         response = requests.post(
-            "https://la-hacks-2025-backend.onrender.com/set_resume",
+            "https://la-hacks-2025-backend.onrender.com/api/set_resume",
             json={"resume": resume_text}
         )
         response.raise_for_status()
